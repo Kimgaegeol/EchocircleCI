@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    <title>OmniOne CX 인증</title>
+
+    <!-- OmniOne CX 기본 CSS -->
+    <link href="https://ida.omnione.net/sign/esign/oacx-ux.css" rel="stylesheet">
+
+    <!-- OmniOne CX 공용 라이브러리 -->
+    <script src="https://ida.omnione.net/sign/esign/oacx-vendor.js"></script>
+    <script src="https://ida.omnione.net/sign/esign/oacx-ux.js"></script>
+</head>
+<body>
+    <div id="oacxDiv">
+        <!-- OmniOne CX 인증 모듈 로드 -->
+    </div>
+
+    <script type="text/javascript">
+        // ✅ URL에서 `certInfo`, `callbackUrl` 가져오기
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        const certInfo = getQueryParam("certInfo");
+        const callbackUrl = getQueryParam("callbackUrl");
+
+        if (!certInfo || !callbackUrl) {
+            alert("❌ certInfo 또는 callbackUrl이 제공되지 않았습니다.");
+        }
+
+        var json = {
+            contentInfo: { signTarget: "SignTest" },
+            certinfo: certInfo,
+            appPush: false,
+            isCustomUI: false,
+            isResultV2: true,
+        };
+
+        window.addEventListener("load", function () {
+            OACX.LOAD_MODULE("https://ida.omnione.net/sign/esign/config/config.auth.json", json, function (res) {
+                res = JSON.parse(res);
+                
+                if (callbackUrl) {
+                    // ✅ 인증 완료 후 프론트엔드의 `callbackUrl`로 `txId`, `token` 전달
+                    window.location.href = `${callbackUrl}?txId=${encodeURIComponent(res.txId)}&token=${encodeURIComponent(res.token)}`;
+                } else {
+                    console.error("❌ callbackUrl이 설정되지 않았습니다.");
+                }
+            });
+        });
+    </script>
+</body>
+</html>

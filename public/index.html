@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang=ko class=oacxHtml>
+<!--  
+    ✔ 페이지 정보  
+    - 이용기관의 간편인증 팝업 요청 페이지
+  -->
+
+<head>
+  <meta http-equiv=Content-Type content="text/html; charset=UTF-8">
+  <meta http-equiv=X-UA-Compatible content="IE=edge">
+  <meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1">
+  <link rel="shortcut icon" href=#>
+  <title>OmniOne CX (통합인증서비스)</title>
+  <link href=./sample.css rel=stylesheet>
+</head>
+
+<body>
+
+  <!-- POST API 통신을 위해 빈 Form Tag 선언 -->
+  <form name="CXWindow" method="post" style="display:none"></form>
+  <div class=oacx-demo-auth>
+    <button id=btn3 type=button class="oacx-ux oacx-ux-btn btn btn-primary demo-btn">
+      간편인증 <span>(pc 새창, 앱 현재창)</span>
+    </button>
+  </div>
+
+  <script type=text/javascript>
+
+  // 간편인증 모듈이 설치된  API URL 주소
+  var url = 'loadModule';
+
+  function apiRequest(isPopup){
+    var xhr  = new XMLHttpRequest();
+    xhr.onreadystatechange = function() { // 요청에 대한 콜백
+      if (xhr.readyState === xhr.DONE) { 
+        var res = xhr.responseText
+        if (xhr.status === 200 || xhr.status === 201) {
+          var resJson = JSON.parse(res)
+          if(isPopup) 
+            document.CXWindow.target = 'CXWindowPopup';
+          else 
+            document.CXWindow.target = '_self';
+          document.CXWindow.action = url; 
+          var certInfo = document.createElement('input');
+          certInfo.name='certInfo';
+          certInfo.value=resJson.certInfo;
+          document.CXWindow.appendChild(certInfo);
+          var callbackUrl = document.createElement('input');
+          callbackUrl.name='callbackUrl';
+          callbackUrl.value=resJson.callbackUrl;
+          document.CXWindow.appendChild(callbackUrl);
+          document.CXWindow.submit();
+          document.CXWindow.removeChild(certInfo);
+          document.CXWindow.removeChild(callbackUrl);
+        } else {
+          console.error(res);
+        }
+      }
+    };
+    xhr.open("GET", "getCertInfo"); //암호화 토큰 생성
+    xhr.send();
+  }
+
+  function isMobile() {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+  }
+  
+  //간편인증
+  document.getElementById("btn3").onclick = function() {
+    if(isMobile()) {
+      apiRequest(false)
+    } else {
+      var position = ',left=10px, top=10px';
+      var winopts = 'width=800px, height=730px, scrollbars=yes, resizable=yes, menubar=no, toolbar=no, location=no, status=no, titlebar=0, ';
+      var cx_window = window.open('about:blank', 'CXWindowPopup', winopts + position);
+      if (cx_window == null) {
+      alert(" ※ 파이어폭스, 윈도우 XP SP2 또는 인터넷 익스플로러 7 사용자일 경우에는 \n    화면 상단에 있는 팝업 차단 알림줄을 클릭하여 팝업을 허용해 주시기 바랍니다. \n\n※ MSN,야후,구글 팝업 차단 툴바가 설치된 경우 팝업허용을 해주시기 바랍니다.");
+      } else {
+        apiRequest(true)
+      }
+    }
+  } 
+    </script>
+</body>
+
+</html>

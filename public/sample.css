@@ -1,0 +1,141 @@
+html.oacxHtml {
+    font-size: 62.5%;
+}
+.oacxHtml, .oacxHtml body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    word-spacing: -1px;
+    font-family: 맑은 고딕,malgun gothic,dotum,돋움,gulim,굴림,Arial,sans-serif;
+    letter-spacing: -.15rem;
+    color: #222;
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+.oacx-demo-auth {
+    top: 260px;
+}
+.oacx-demo-auth, .oacx-demo-sign {
+    position: absolute;
+    top: 235px;
+    left: calc(50% - 158px);
+}
+.demo-header {
+    border-radius: 6px 6px 0 0;
+    padding: 0;
+    border-left: 2px solid #128fb1;
+    border-color: #128fb1 #128fb1 currentcolor;
+    border-right: 2px solid #128fb1;
+    border-top: 2px solid #128fb1;
+}
+.demo-header ul li:first-child a {
+    border-top-left-radius: 4px!important;
+}
+.demo-header ul li:last-child a {
+    border-top-right-radius: 4px!important;
+}
+.demo-header ul {
+    font-size: 17px;
+    display: inline-flex;
+    width: 100%;
+}
+.demo-header ul li {
+    width: 100%;
+}
+.demo-header ul li a, .log-header ul li a {
+    text-align: center;
+    background: #878787;
+    color: #fff;
+    font-weight: 700;
+    display: block;
+    margin: 1px 1px 0;
+    height: 40px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    padding-top: 11px;
+    cursor: pointer;
+}
+#oacxDemoMain li, #oacxDemoMain ol, #oacxDemoMain ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+.demo-select, .log-select {
+    background-color: #128fb1!important;
+    border-color: #128fb1!important;
+}
+#btn3 {
+    margin-top:10px;
+}
+.oacx-ux-btn {
+    display: inline-block;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    user-select: none;
+    font-size: 8.13px;
+    line-height: 1.5;
+    border-radius: 10px;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    color: #fff;
+    background-color: #003473;
+    width: 300px;
+    cursor: pointer;
+    font-size: 23px;
+    font-weight: 700;
+    padding: 15px 20px;
+    background-color: #128fb1;
+    border: 1px solid #128fb1;
+}
+.oacx-ux-btn span {
+    display: block;
+    font-size: 15px;
+    font-weight: 400;
+    margin-top: 8px;
+}
+ @media screen and (max-width: 640px) { 
+    .oacx-demo-auth input{
+        width: calc(100% - 40px);
+    }
+    .oacx-demo-auth {
+        top: 175px;
+    }
+    .oacx-demo-auth, .oacx-demo-sign {
+        left: calc(50% - 150px);
+    }
+    button.demo-btn {
+        padding: 15px 25px;
+    }
+    .btn {
+        font-size: 20px;
+    }
+    .demo-header ul li a {
+        font-size: 14px;
+        height: 35px;
+    }
+    .oacx-ux-btn span {
+        font-size: 12px;
+    }
+}
+
+.oacx-demo-auth:not(.custom) .show-on-custom{
+    display:none;
+}
+.oacx-demo-auth:not(.sign) .show-on-sign{
+    display:none;
+}
+.oacx-demo-auth input, .oacx-demo-sign input {
+    display: block;
+    width: 270px;
+    margin: auto auto 10px;
+    height: 41px;
+    line-height: 38px!important;
+    padding: 0 14px;
+    border: 1px solid #bcc5ce;
+    border-radius: 5px;
+    background: #fbfbfb;
+    font-size: 14px;
+}

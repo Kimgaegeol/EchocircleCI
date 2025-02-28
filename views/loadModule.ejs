@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ko" class="oacxHtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    <link rel="shortcut icon" href="#">
+    <title>OmniOne CX (통합인증서비스)</title>
+
+    <!-- 간편인증 팝업 CSS  -->
+    <link href="<%=baseUrl%>/sign/esign/oacx-ux.css" rel="stylesheet">    
+    <!-- 간편인증 공용 라이브러리 Script -->
+    <script type="text/javascript" src="<%=baseUrl%>/sign/esign/oacx-vendor.js"></script>
+    <!--  간편인증 비지니스로직 Script -->
+    <script type="text/javascript" src="<%=baseUrl%>/sign/esign/oacx-ux.js"></script>
+    <script src="https://ida.omnione.net/sign/esign/util/jquery-3.3.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-migrate-3.4.0.js"></script>
+    <script src="https://ida.omnione.net/sign/esign/util/rsbridge-1.0.3.js"></script>
+</head>
+
+<body>
+    <div id="oacxDiv">
+        <!-- 간편인증 팝업 HTML 삽입  -->
+    </div>
+
+    <script type="text/javascript">
+        // var json = {
+        //     contentInfo: {
+        //         signTarget: '<%=signTarget%>'
+        //     },
+        //     userInfo: {
+        //         name: "",       //이름 (ex 홍길동)
+        //         phone1: "",     //휴대폰번호 앞자리 3자리 (ex 010)
+        //         phone2: "",     //휴대폰번호 뒷자리 7,8자리 (ex 12345678)
+        //         telcoTycd: "", //S,K,L
+        //         birthday: ""    //생년월일 (ex 19900101)
+        //     },
+        //     certinfo: '<%=certInfo%>', // oacx-ux.js에서 Axios(=ajax)로 API 통신 시 certInfo 값을 header에 포함시켜 API 요청함
+        //     appPush: false,
+        //     isCustomUI: false, // 커스텀 색을 사용할지 사용하지 않할지
+        //     defaultBackgroundColor: '#de82de', // 기본 테마 색 버튼 등
+        //     closeBackgroundColor: '#a0c750', // 닫기 버튼 색
+        //     closeColor: 'red', // 닫기 버튼 폰트 색
+        //     isLogo: true, // 로그 보일지 안보일지, 현재 모바일에만 적용
+        //     logoAltMsg: '', //로고 이미지 태그 alt 값
+        //     isResultV2: true, // false : v1.0 / true : v2.0 API 사용 여부
+        // };
+
+        // window.addEventListener('load', function () {
+        //     OACX.LOAD_MODULE("<%=baseUrl%>/sign/esign/config/config.auth.json", json, function (res) {
+        //         // Success handler 응답 값 => res
+        //         res = JSON.parse(res);
+
+        //         if (!!window.opener && window.opener != window) {
+        //             var form = window.opener.document.createElement("form");
+        //             form.style.display = 'none';
+        //             form.setAttribute("charset", "UTF-8");
+        //             form.setAttribute("method", "POST");
+        //             form.setAttribute("action", '<%=callbackUrl%>');
+        //             form.setAttribute("target", "_self");
+        //             // result.jsp 에 전달할 파라미터값 세팅 1. token
+        //             var input = window.opener.document.createElement("input");
+        //             input.setAttribute("name", "token");
+        //             input.setAttribute("value", res.token);
+        //             form.appendChild(input);
+        //             // result.jsp 에 전달할 파라미터값 세팅 2. txId
+        //             var txInput = window.opener.document.createElement("input");
+        //             txInput.setAttribute("name", "txId");
+        //             txInput.setAttribute("value", res.txId);
+        //             form.appendChild(txInput);
+        //             window.opener.document.body.appendChild(form);
+        //             form.submit();
+        //             close();
+        //         } else {
+        //             var form = document.createElement("form");
+        //             form.setAttribute("charset", "UTF-8");
+        //             form.setAttribute("method", "POST");
+        //             form.setAttribute("action", '<%=callbackUrl%>');
+        //             form.setAttribute("target", "_self");
+        //             // result.jsp 에 전달할 파라미터값 세팅 1. token
+        //             var input = window.opener.document.createElement("input");
+        //             input.setAttribute("name", "token");
+        //             input.setAttribute("value", res.token);
+        //             form.appendChild(input);
+        //             // result.jsp 에 전달할 파라미터값 세팅 2. txId
+        //             var txInput = window.opener.document.createElement("input");
+        //             txInput.setAttribute("name", "txId");
+        //             txInput.setAttribute("value", res.txId);
+        //             form.appendChild(txInput);
+        //             document.body.appendChild(form);
+        //             form.submit();
+        //         }
+        //     });
+        //     OACX.options.callback.event.close = function () {
+        //         // 이용기관 포탈에서 띄워진 간편인증 팝업창을 해당 이벤트에서 닫기 버튼 클릭시 새창을 닫음.
+        //         window.close();
+        //     };
+        //     OACX.options.callback.ajax.success.authComplete = function () {
+        //         console.log('authComplete');
+        //     };
+        // });
+        window.addEventListener('load', function () {
+            OACX.LOAD_MODULE("<%=baseUrl%>/sign/esign/config/config.auth.json", json, function (res) {
+                res = JSON.parse(res);
+                const callbackUrl = "<%= callbackUrl %>";
+
+                if (callbackUrl) {
+                    // ✅ 인증이 완료되면 프론트엔드의 `callbackUrl`로 `txId`, `token`을 포함하여 이동
+                    window.location.href = `${callbackUrl}?txId=${encodeURIComponent(res.txId)}&token=${encodeURIComponent(res.token)}`;
+                } else {
+                    console.error("❌ callbackUrl이 설정되지 않았습니다.");
+                }
+            });
+        });
+
+        OACX.options.callback.event.close = function () {
+            console.log("❌ 인증창이 닫혔습니다.");
+        };
+
+        OACX.options.callback.ajax.success.authComplete = function () {
+            console.log("✅ 인증 완료!");
+        };
+    </script>
+</body>
+</html>

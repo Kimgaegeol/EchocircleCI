@@ -1,0 +1,10 @@
+express
+body-parser
+dotenv
+ejs
+express-session
+iconv-lite
+axios
+pg
+cors
+pm2

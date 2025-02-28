@@ -1,0 +1,15 @@
+.env
+node_modules
+tomcat/apache-tomcat-10.1.36/bin
+tomcat/apache-tomcat-10.1.36/conf
+tomcat/apache-tomcat-10.1.36/lib
+tomcat/apache-tomcat-10.1.36/logs
+tomcat/apache-tomcat-10.1.36/temp
+tomcat/apache-tomcat-10.1.36/work
+tomcat/apache-tomcat-10.1.36/BUILDING.txt
+tomcat/apache-tomcat-10.1.36/CONTRIBUTING.md
+tomcat/apache-tomcat-10.1.36/LICENSE
+tomcat/apache-tomcat-10.1.36/NOTICE
+tomcat/apache-tomcat-10.1.36/README.md
+tomcat/apache-tomcat-10.1.36/RELEASE-NOTES
+tomcat/apache-tomcat-10.1.36/RUNNING.txt

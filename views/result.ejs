@@ -1,0 +1,355 @@
+<html lang="ko">
+<!-- 
+  ✔ 페이지 정보  
+  - 간편인증 창의 인증완료 시 수행되는 페이지
+  -->
+
+<head>
+  <style type="text/css">
+    .oacx-demo-auth {
+      min-width: 650px;
+    }
+
+    .demo-contaner {
+      margin-top: 5vh;
+      width: 80%;
+
+      word-break: break-all;
+      align-items: center;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      border: solid 2px;
+      border-radius: 10px;
+    }
+
+    .demo-contaner .list1 {
+      flex-shrink: 0;
+      width: 20%;
+    }
+
+    .demo-contaner .list div {
+      padding-top: 2vh;
+      padding-bottom: 2vh;
+      padding-left: 1vh;
+      border-top: 1px solid;
+      margin-right: 0px;
+      border-right: solid 1px;
+    }
+
+    .demo-contaner div .title {
+      border-right: none;
+      border-top: none;
+      background-color: azure;
+    }
+
+    .demo-contaner .list .result {
+      font-weight: bolder;
+      cursor: pointer;
+    }
+
+    .copy-text {
+      background-color: #444444;
+      border-radius: 5px;
+      color: #ffffff;
+      position: absolute;
+      display: none;
+    }
+
+    .demo-contaner .list .result:hover+.copy-text {
+      display: block;
+    }
+
+    .demo-contaner .flex {
+      display: flex;
+      flex-wrap: nowrap;
+    }
+
+    .list div:last-child {
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <div class=oacx-demo-auth style="display:flex; justify-content: center;">
+    <div class="demo-contaner">
+      <div id="oacx-demo-result">
+        <div class="title flex list">
+          <div class="list1">설명</div>
+          <div class="list1">key</div>
+          <div> 결과값</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <script type=text/javascript>
+    var listRoot = document.getElementById("oacx-demo-result");
+    const json = {
+      name: "<%=name%>",
+      birth: "<%=birth%>",
+      ci: "<%=ci%>",
+      ci2: "<%=ci2%>",
+      ciUpdCnt: "<%=ciUpdCnt%>",
+      nationality: "<%=nationality%>",
+      gender: "<%=gender%>",
+      di: "<%=di%>",
+      txid: "<%=txid%>",
+      cxid: "<%=cxid%>",
+      phone: "<%=phone%>",
+      provider: "<%=provider%>",
+      resultCode: "<%=resultCode%>",
+      clientMessage: "<%=clientMessage%>",
+      signedData: "<%=signedData%>",
+      signType: "<%=signType%>",
+      mdlAdditionInfo: {
+        address :'<%=address%>',
+        asort:'<%=asort%>' ,
+        dlno:'<%=dlno%>' ,
+        ihidnum:'<%=ihidnum%>' ,
+        inspectbegend:'<%=inspectbegend%>',
+        issude:'<%=issude%>',
+        lcnscndcdnm:'<%=lcnscndcdnm%>',
+        locpanm:'<%=locpanm%>',
+        passwordsn:'<%=passwordsn%>',
+        dlphotoimage :'<%=dlphotoimage%>',
+        converterimage :'<img src="data:image/png;base64,<%=converterimage%>" width=400/>',
+        inorgdonnyn :'<%=inorgdonnyn%>',
+        zkp :'<%=zkp%>',
+				zkpsex :'<%=zkpsex%>',
+				zkpasort :'<%=zkpasort%>',
+				zkpaddr :'<%=zkpaddr%>',
+				zkpadult :'<%=zkpadult%>'
+      },
+      mma_bjjms: {
+        bctypecode: "<%=bctypecode%>",
+        bjd_addr: "<%=bjd_addr%>",
+        yongdo: "<%=yongdo%>",
+        gbgjsincheong_yn: "<%=gbgjsincheong_yn%>",
+        gggjsincheong_yn: "<%=gggjsincheong_yn%>",
+        bgtggjsincheong_yn: "<%=bgtggjsincheong_yn%>",
+        jygbgjsincheong_yn: "<%=jygbgjsincheong_yn%>",
+        yjgjsincheong_yn: "<%=yjgjsincheong_yn%>",
+        bmbygjsincheong_yn: "<%=bmbygjsincheong_yn%>",
+        bmgggjsincheong_yn: "<%=bmgggjsincheong_yn%>",
+        ggrgjsincheong_yn: "<%=ggrgjsincheong_yn%>",
+        ggrgjsincheong_cn: "<%=ggrgjsincheong_cn%>",
+        bgjssangtaekd: "<%=bgjssangtaekd%>",
+        damdangjajbc: "<%=damdangjajbc%>",
+        brcibgjeopsubh: "<%=brcibgjeopsubh%>",
+        ggcd: "<%=ggcd%>",
+        jmsyuhyogg: "<%=jmsyuhyogg%>",
+        damdangjasm: "<%=damdangjasm%>",
+        ddjjibangcheongkd: "<%=ddjjibangcheongkd%>",
+        damdangjayrc: "<%=damdangjayrc%>",
+        ggmsg: "<%=ggmsg%>",
+        gunbokmuyb: "<%=gunbokmuyb%>",
+        bjjmsbalgeupny: "<%=bjjmsbalgeupnyReplace%>",
+        jmssayongyd: "<%=jmssayongyd%>",
+        balhaengbh: "<%=balhaengbh%>",
+        balhaengij: "<%=balhaengij%>",
+      },
+      mma_semesterOff: {
+        seongmyeong: "<%=seongmyeong%>",
+        saengnyeonwi: "<%=saengnyeonwi%>",
+        ipyeongij: "<%=ipyeongij%>",
+        ipyeongbd: "<%=ipyeongbd%>",
+        ipyeonggg: "<%=ipyeonggg%>",
+        balgeupgg: "<%=balgeupgg%>",
+        tongjibh: "<%=tongjibh%>",
+        tongjiseomyeong: "<%=tongjiseomyeong%>",
+        sedaejusm: "<%=sedaejusm%>",
+        gwangye: "<%=gwangye%>",
+        juso: "<%=juso%>",
+        ipyeongis: "<%=ipyeongis%>",
+        moineunjs: "<%=moineunjs%>",
+        balgeupij: "<%=balgeupij%>",
+      },
+    };
+    console.log(json);
+    
+    var listUtilInst = listUtil(json);
+    listRoot.appendChild(listUtilInst.createList("txid", "txid"));
+    listRoot.appendChild(listUtilInst.createList("cxid", "cxid"));
+    listRoot.appendChild(listUtilInst.createList("name", "이름"));
+    listRoot.appendChild(listUtilInst.createList("birth", "생년월일"));
+    if (json.provider.indexOf("mdl") == -1) {
+      listRoot.appendChild(listUtilInst.createList("phone", "휴대폰번호"));
+    }
+    if (json.provider.indexOf("omni_sign") == -1) {
+      listRoot.appendChild(listUtilInst.createList("ci", "ci"));
+    }
+    if (json.signType.indexOf("IDENT") > -1) {
+      listRoot.appendChild(listUtilInst.createList("ci2", "ci2"));
+      listRoot.appendChild(listUtilInst.createList("ciUpdCnt", "ciUpdCnt"));
+      listRoot.appendChild(listUtilInst.createList("di", "di"));
+      listRoot.appendChild(listUtilInst.createList("nationality", "국적"));
+      listRoot.appendChild(listUtilInst.createList("gender", "성별"));
+    }
+    listRoot.appendChild(listUtilInst.createList("provider", "기관id"));
+    listRoot.appendChild(listUtilInst.createList("resultCode", "결과코드"));
+    listRoot.appendChild(listUtilInst.createList("clientMessage", "결과메시지"));
+    listRoot.appendChild(listUtilInst.createList("signType", "인증종류"));
+    
+    if (json.signType.indexOf("SIGN") > -1) {
+      var signDiv = listUtilInst.createList("signedData", "서명데이터");
+      signDiv.childNodes[2].classList.add("result");
+      signDiv.childNodes[2].onclick = movetoReulst;
+      listRoot.appendChild(signDiv);
+    }
+    if (json.provider.indexOf("mdl") > -1) {
+      listUtilInst.setJson(json.mdlAdditionInfo);
+      listRoot.appendChild(listUtilInst.createList('address',"면허증 주소"));
+      listRoot.appendChild(listUtilInst.createList('asort',"면허증 종류"));
+      listRoot.appendChild(listUtilInst.createList('dlno',"면허증 번호"));
+      listRoot.appendChild(listUtilInst.createList('ihidnum',"주민등록번호"));
+      listRoot.appendChild(listUtilInst.createList('inspectbegend',"적성검사기간"));
+      listRoot.appendChild(listUtilInst.createList('issude',"발행일"));
+      listRoot.appendChild(listUtilInst.createList('lcnscndcdnm',"면허조건명"));
+      listRoot.appendChild(listUtilInst.createList('locpanm',"발행 지방경찰청명의"));
+      listRoot.appendChild(listUtilInst.createList('passwordsn',"암호일련번호"));
+      listRoot.appendChild(listUtilInst.createList('dlphotoimage',"면허증 사진 이미지"));
+      listRoot.appendChild(listUtilInst.createList('converterimage',"VC Converter로 생성된 이미지"));
+      listRoot.appendChild(listUtilInst.createList('inorgdonnyn',"장기 기증 여부"));
+      listRoot.appendChild(listUtilInst.createList('zkp',"zkp"));
+			listRoot.appendChild(listUtilInst.createList('zkpsex',"zkp 성별 증명 값"));
+			listRoot.appendChild(listUtilInst.createList('zkpasort',"zkp 면허종별 증명 값"));
+			listRoot.appendChild(listUtilInst.createList('zkpaddr',"zkp 주소 증명 값"));
+			listRoot.appendChild(listUtilInst.createList('zkpadult',"zkp 성인 인증 증명 값"));
+    }
+    if (json.provider == "mma_bjjms") {
+      listUtilInst.setJson(json.mma_bjjms);
+      listRoot.appendChild(listUtilInst.createList("bctypecode", "증명서코드"));
+      listRoot.appendChild(listUtilInst.createList("bjd_addr", "주소"));
+      listRoot.appendChild(listUtilInst.createList("yongdo", "용도"));
+      listRoot.appendChild(
+        listUtilInst.createList("gbgjsincheong_yn", "군별 기재 / 미기재")
+      );
+      listRoot.appendChild(
+        listUtilInst.createList("gggjsincheong_yn", "계급 기재 / 미기재")
+      );
+      listRoot.appendChild(
+        listUtilInst.createList("bgtggjsincheong_yn", "병과(특기) 기재 / 미기재")
+      );
+      listRoot.appendChild(
+        listUtilInst.createList(
+          "jygbgjsincheong_yn",
+          "전역구분(사유) 기재 / 미기재"
+        )
+      );
+      listRoot.appendChild(
+        listUtilInst.createList("yjgjsincheong_yn", "역종 기재 / 미기재")
+      );
+      listRoot.appendChild(
+        listUtilInst.createList("bmbygjsincheong_yn", "복무분야 기재 / 미기재")
+      );
+      listRoot.appendChild(
+        listUtilInst.createList("bmgggjsincheong_yn", "복무계급 기재 / 미기재")
+      );
+      listRoot.appendChild(
+        listUtilInst.createList("ggrgjsincheong_yn", "군경력 및 기타 포함 / 미포함")
+      );
+      listRoot.appendChild(
+        listUtilInst.createList("ggrgjsincheong_cn", "군격력 및 기타")
+      );
+      listRoot.appendChild(
+        listUtilInst.createList("bgjssangtaekd", "발급 접수상태 코드")
+      );
+      listRoot.appendChild(listUtilInst.createList("damdangjajbc", "담당자지방청"));
+      listRoot.appendChild(
+        listUtilInst.createList("brcibgjeopsubh", "블록체인발급접수번호")
+      );
+      listRoot.appendChild(listUtilInst.createList("ggcd", "결과 코드"));
+      listRoot.appendChild(listUtilInst.createList("damdangjasm", "담당자 성명"));
+      listRoot.appendChild(
+        listUtilInst.createList("ddjjibangcheongkd", "담당자지방청코드")
+      );
+      listRoot.appendChild(listUtilInst.createList("damdangjayrc", "담당자연락처"));
+      listRoot.appendChild(listUtilInst.createList("ggmsg", "결과 메시지"));
+      listRoot.appendChild(listUtilInst.createList("gunbokmuyb", "군복무여부"));
+      listRoot.appendChild(
+        listUtilInst.createList("bjjmsbalgeupny", "병적증명서 발급 내용")
+      );
+      listRoot.appendChild(listUtilInst.createList("jmsyuhyogg", "증명서유효기간"));
+      listRoot.appendChild(
+        listUtilInst.createList("jmssayongyd", "증명서사용용도")
+      );
+      listRoot.appendChild(listUtilInst.createList("balhaengbh", "발행번호"));
+      listRoot.appendChild(listUtilInst.createList("balhaengij", "발행일자"));
+    }
+    if (json.provider == "mma_semesterOff") {
+      listUtilInst.setJson(json.mma_semesterOff);
+      listRoot.appendChild(listUtilInst.createList("seongmyeong", "성명"));
+      listRoot.appendChild(listUtilInst.createList("saengnyeonwi", "생년월일"));
+      listRoot.appendChild(listUtilInst.createList("ipyeongij", "입영일자"));
+      listRoot.appendChild(listUtilInst.createList("ipyeongbd", "입영부대"));
+      listRoot.appendChild(listUtilInst.createList("ipyeonggg", "입영구분"));
+      listRoot.appendChild(listUtilInst.createList("balgeupgg", "발급기관"));
+      listRoot.appendChild(listUtilInst.createList("tongjibh", "통지번호"));
+      listRoot.appendChild(listUtilInst.createList("tongjiseomyeong", "통지서명"));
+      listRoot.appendChild(listUtilInst.createList("sedaejusm", "세대주성명"));
+      listRoot.appendChild(listUtilInst.createList("gwangye", "관계"));
+      listRoot.appendChild(listUtilInst.createList("juso", "주소"));
+      listRoot.appendChild(listUtilInst.createList("ipyeongis", "입영일자"));
+      listRoot.appendChild(listUtilInst.createList("moineunjs", "모이는장소"));
+      listRoot.appendChild(listUtilInst.createList("balgeupij", "발급일자"));
+    }
+    
+    function copy(item) {
+      var textarea = document.createElement("textarea");
+      textarea.textContent = item.textContent;
+      document.body.append(textarea);
+      textarea.select();
+      document.execCommand("copy");
+      textarea.remove();
+    }
+    function movetoReulst() {
+      var params = "";
+      params += "originData=" + localStorage.originData;
+      params += "&provider=" + json.provider;
+      params += "&signedData=" + encodeURIComponent(json.signedData);
+      var xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = function () {
+        // 요청에 대한 콜백
+        if (xhr.readyState === xhr.DONE) {
+          alert(xhr.responseText.trim());
+        }
+      };
+      xhr.open("POST", "verify.jsp");
+      xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+      xhr.send(params);
+    }
+    function listUtil(json) {
+      var json = json;
+      var listUtilInst = {
+        createList: function (key, desc) {
+          var outerDiv = document.createElement("div");
+          outerDiv.classList.add("flex", "list");
+          var keyDiv = document.createElement("div");
+          var descDiv = document.createElement("div");
+          var valDiv = document.createElement("div");
+          keyDiv.innerText = key;
+          keyDiv.classList.add("list1");
+          descDiv.innerText = desc;
+          descDiv.classList.add("list1");
+          valDiv.innerHTML = json[key];
+          outerDiv.appendChild(descDiv);
+          outerDiv.appendChild(keyDiv);
+          outerDiv.appendChild(valDiv);
+          return outerDiv;
+        },
+        setJson: function (newJson) {
+          json = newJson;
+        },
+      };
+      return listUtilInst;
+    }
+  </script>
+</body>
+
+</html>
