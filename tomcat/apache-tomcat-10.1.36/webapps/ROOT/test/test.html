@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OmniOne CX 간편인증 테스트</title>
+    <style>
+        body { font-size: 5px !important }
+    </style>
+</head>
+<body>
+    <p id="authStatus"></p>
+
+    <script>
+        const backendUrl = "http://13.209.208.71:8001";  
+        const tomcatUrl = "http://13.209.208.71:1333";  
+
+        document.addEventListener("DOMContentLoaded", async function () {
+            try {
+                const response = await fetch(`${backendUrl}/getCertInfo`, { credentials: "include" });
+                const data = await response.json();
+
+                if (!data.certInfo || !data.authToken || !data.callbackUrl) {
+                    alert("인증 정보를 가져오지 못했습니다.");
+                    return;
+                }
+
+                // ✅ `authToken`을 `localStorage`에 저장
+                localStorage.setItem("authToken", data.authToken);
+
+                // ✅ Tomcat에서 `loadModule.html`을 실행 (`authToken`은 localStorage에서 유지됨)
+                window.location.href = `${tomcatUrl}/loadModule.html?certInfo=${encodeURIComponent(data.certInfo)}&callbackUrl=${encodeURIComponent(data.callbackUrl)}`;
+            } catch (error) {
+                console.error("인증 요청 실패:", error);
+            }
+        });
+
+    </script>
+
+</body>
+</html>

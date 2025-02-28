@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>인증 완료 - CI 값 조회</title>
+    <script>
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        function sendDataToRN() {
+            // 현재 URL에서 txId, token, ci 값 추출
+            function getQueryParam(param) {
+                const urlParams = new URLSearchParams(window.location.search);
+                return urlParams.get(param);
+            }
+            let txId = getQueryParam("txId");
+            let token = getQueryParam("token");
+            let authToken = localStorage.getItem("authToken");  // ✅ `localStorage`에서 `authToken` 가져오기
+
+            if (txId && token && authToken) {
+                const data = {
+                    txId: txId,
+                    token: token,
+                    authToken:  authToken,
+                };
+
+                // React Native로 데이터 전달
+                window.ReactNativeWebView.postMessage(JSON.stringify(data));
+            }
+        }
+
+        // 페이지 로드되면 자동 실행
+        window.onload = sendDataToRN;
+    </script>
+</head>
+<body>
+
+    <h1>인증 완료</h1>
+
+    <script>
+        // const backendUrl = "http://13.209.208.71:3010";  
+
+        // document.getElementById("getCiValue").addEventListener("click", async function () {
+        //     try {
+        //         if (!txId || !token || !authToken) {
+        //             alert("txId, token 또는 authToken이 없습니다.");
+        //             return;
+        //         }
+
+        //         const response = await fetch(`${backendUrl}/parseResult?txId=${encodeURIComponent(txId)}&token=${encodeURIComponent(token)}&authToken=${encodeURIComponent(authToken)}`, {
+        //             method: "GET",
+        //             headers: { "Content-Type": "application/json" }
+        //         });
+
+        //         const data = await response.json();
+
+        //         if (data.error) {
+        //             document.getElementById("authStatus").innerText = `❌ 오류: ${data.error}`;
+        //             return;
+        //         }
+
+        //         // ✅ 받은 데이터를 개별 HTML 요소에 출력
+        //         document.getElementById("name").innerText = data.name || "없음";
+        //         document.getElementById("birth").innerText = data.birth || "없음";
+        //         document.getElementById("ci").innerText = data.ci || "없음";
+
+        //         document.getElementById("authStatus").innerText = "✅ CI 값 조회 완료!";
+
+        //     } catch (error) {
+        //         console.error("CI 값 가져오기 실패:", error);
+        //         document.getElementById("authStatus").innerText = "❌ CI 값 가져오기 실패!";
+        //     }
+        // });
+    </script>
+</body>
+</html>
