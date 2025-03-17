@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" class="oacxHtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,6 +12,12 @@
     <!-- OmniOne CX 공용 라이브러리 -->
     <script src="https://ida.omnione.net/sign/esign/oacx-vendor.js"></script>
     <script src="https://ida.omnione.net/sign/esign/oacx-ux.js"></script>
+
+    <style>
+        body {
+            font-size: 14px;
+        }
+    </style>
 </head>
 <body>
     <div id="oacxDiv">
@@ -43,7 +49,7 @@
         window.addEventListener("load", function () {
             OACX.LOAD_MODULE("https://ida.omnione.net/sign/esign/config/config.auth.json", json, function (res) {
                 res = JSON.parse(res);
-                
+
                 if (callbackUrl) {
                     // ✅ 인증 완료 후 프론트엔드의 `callbackUrl`로 `txId`, `token` 전달
                     window.location.href = `${callbackUrl}?txId=${encodeURIComponent(res.txId)}&token=${encodeURIComponent(res.token)}`;
